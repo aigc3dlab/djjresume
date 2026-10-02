@@ -1,0 +1,2372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>杜建军 | AIGC_3D视觉实验室 创始人 · 个人主页与履历</title>
+<meta name="description" content="杜建军 - AIGC_3D视觉实验室创始人，深耕人工智能生成内容与三维视觉技术研究与产业化应用。美国The Polys全球五强提名创作者，《AIGC新媒体技能与应用实战》主编。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   1. 现代科技美学设计系统 (DESIGN TOKENS)
+   ============================================================ */
+:root {
+  --bg-deep: #050811;
+  --bg-surface: #0a101d;
+  --bg-card: rgba(15, 23, 42, 0.65);
+  --bg-card-hover: rgba(22, 34, 60, 0.85);
+  --bg-glass: rgba(10, 16, 29, 0.75);
+
+  --accent-cyan: #00f2fe;
+  --accent-blue: #4facfe;
+  --accent-violet: #8b5cf6;
+  --accent-fuchsia: #d946ef;
+  --accent-emerald: #10b981;
+
+  --glow-cyan: rgba(0, 242, 254, 0.45);
+  --glow-violet: rgba(139, 92, 246, 0.35);
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-accent: rgba(0, 242, 254, 0.28);
+  --border-glow: rgba(0, 242, 254, 0.6);
+
+  --text-main: #f8fafc;
+  --text-body: #cbd5e1;
+  --text-dim: #94a3b8;
+  --text-muted: #64748b;
+
+  --grad-hero: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #8b5cf6 100%);
+  --grad-card: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+  --grad-badge: linear-gradient(135deg, rgba(0,242,254,0.15) 0%, rgba(139,92,246,0.15) 100%);
+
+  /* 原始媒体资源 */
+  --avatar-url: url('https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/GlYtbNnUco4wTsxyCo8cOGbBnWc');
+  --book-url: url('https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/RuyabwiiqobfxYxNKrbcNWxLnze');
+  --award-url: url('https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/VCPpbTeRsowHHgxTsbycHb3wngg');
+  --training-ncu-url: url('https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/IROMb1Pn3o42Ryx7POlcinP5nDg');
+  --vr-2018-url: url('https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/SL0HbyV9woRejixb1s5cvkNsn4b');
+  --vr-2019-url: url('https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/EFltbcGD8oFWgDxl2hRcbWEnnJb');
+  --vr-2020-url: url('https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/RhbobK597orezgx8WZEccvo7nze');
+  --vr-2021-url: url('https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/KDVnbqI32o9hXGxyS55cjoMvnXg');
+  --vr-2021b-url: url('https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/B5OrbrOpwoJdh8x1a3RcqDA4nic');
+}
+
+/* ============================================================
+   2. 基础重置与排版
+   ============================================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  font-family: 'Noto Sans SC', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-deep);
+  color: var(--text-body);
+  line-height: 1.75;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+/* 动态背景 Canvas 与网格光晕 */
+#cyber-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+/* 鼠标跟随动态聚光灯 (Spotlight) */
+.mouse-glow {
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 242, 254, 0.08) 0%, rgba(139, 92, 246, 0.04) 40%, transparent 70%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  transition: opacity 0.3s ease;
+  filter: blur(40px);
+}
+
+/* 空间透视网格地平线 */
+.grid-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: 
+    linear-gradient(rgba(0, 242, 254, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 242, 254, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 0;
+  mask-image: radial-gradient(circle at 50% 30%, black 20%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at 50% 30%, black 20%, transparent 80%);
+}
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 28px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ============================================================
+   3. 导航栏 (NAVBAR)
+   ============================================================ */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 16px 0;
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: all 0.3s ease;
+}
+
+nav.scrolled {
+  padding: 12px 0;
+  background: rgba(5, 8, 17, 0.88);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+  border-bottom-color: var(--border-accent);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text-main);
+}
+
+.nav-logo-icon {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(139, 92, 246, 0.25));
+  border: 1px solid var(--border-accent);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--accent-cyan);
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.25);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.nav-brand:hover .nav-logo-icon {
+  transform: scale(1.08) rotate(5deg);
+  border-color: var(--accent-cyan);
+}
+
+.nav-brand-title {
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-brand-title span:first-child {
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.nav-brand-title span:last-child {
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--accent-cyan);
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  position: relative;
+  padding: 6px 0;
+  transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 8px var(--accent-cyan);
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #fff;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%;
+}
+
+.nav-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: rgba(0, 242, 254, 0.08);
+  border: 1px solid var(--border-accent);
+  color: var(--accent-cyan);
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.nav-action-btn:hover {
+  background: var(--accent-cyan);
+  color: #050811;
+  box-shadow: 0 0 20px var(--glow-cyan);
+  transform: translateY(-1px);
+}
+
+/* 移动端菜单切换按钮 */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-main);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* ============================================================
+   4. HERO 区域 (HERO BANNER)
+   ============================================================ */
+.hero {
+  min-height: 94vh;
+  display: flex;
+  align-items: center;
+  padding-top: 100px;
+  padding-bottom: 60px;
+  position: relative;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.hero-badge-wrap {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.hero-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: var(--grad-badge);
+  border: 1px solid var(--border-accent);
+  border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--accent-cyan);
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent-cyan);
+  border-radius: 50%;
+  position: relative;
+}
+
+.pulse-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  opacity: 0.6;
+  animation: ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+.hero-honors-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  border-radius: 100px;
+  font-size: 12px;
+  color: #c4b5fd;
+  font-weight: 500;
+}
+
+.hero-title {
+  font-size: clamp(40px, 5.5vw, 68px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.hero-title .text-gradient {
+  background: var(--grad-hero);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+  filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.3));
+}
+
+.hero-tagline {
+  font-size: clamp(17px, 2vw, 21px);
+  color: var(--text-dim);
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  margin-bottom: 32px;
+  max-width: 580px;
+}
+
+.hero-tagline strong {
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.hero-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 18px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  backdrop-filter: blur(16px);
+  margin-bottom: 36px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 4px;
+}
+
+.info-val {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* 按钮规范 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 28px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+  color: #050811;
+  box-shadow: 0 4px 20px rgba(0, 242, 254, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 242, 254, 0.5);
+  filter: brightness(1.08);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-main);
+  border: 1px solid var(--border-accent);
+  backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+  background: rgba(0, 242, 254, 0.1);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   5. 头像 3D 雷达/全息展示区 (HERO AVATAR HUD)
+   ============================================================ */
+.hero-avatar-showcase {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+}
+
+.avatar-tilt-card {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease-out;
+  transform-style: preserve-3d;
+}
+
+/* 外围多重科技光环 */
+.hud-ring-outer {
+  position: absolute;
+  inset: -24px;
+  border-radius: 50%;
+  border: 1px dashed rgba(0, 242, 254, 0.25);
+  animation: hud-rotate-cw 30s linear infinite;
+  pointer-events: none;
+}
+
+.hud-ring-inner {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+  border-top-color: var(--accent-cyan);
+  border-bottom-color: var(--accent-violet);
+  animation: hud-rotate-ccw 14s linear infinite;
+  box-shadow: 0 0 25px rgba(0, 242, 254, 0.2);
+  pointer-events: none;
+}
+
+.hud-ring-glow {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(0, 242, 254, 0.3), rgba(139, 92, 246, 0.3));
+  filter: blur(12px);
+  z-index: 1;
+  opacity: 0.6;
+}
+
+.avatar-photo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-image: var(--avatar-url);
+  background-size: cover;
+  background-position: center;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 15px 40px rgba(0, 0, 0, 0.8),
+    inset 0 0 25px rgba(0, 0, 0, 0.4);
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+}
+
+/* 扫光扫描线效果 */
+.avatar-photo::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, rgba(0, 242, 254, 0.25), transparent);
+  animation: scan-line 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes scan-line {
+  0% { top: -100%; }
+  50% { top: 100%; }
+  100% { top: 100%; }
+}
+
+@keyframes hud-rotate-cw {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes hud-rotate-ccw {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+/* 悬浮全息浮动标签卡 (Floating HUD badges) */
+.hud-badge-float {
+  position: absolute;
+  padding: 8px 16px;
+  background: rgba(10, 16, 29, 0.85);
+  border: 1px solid var(--border-accent);
+  backdrop-filter: blur(16px);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 242, 254, 0.15);
+  z-index: 3;
+  animation: float-badge 4s ease-in-out infinite alternate;
+}
+
+.hud-badge-float.top-right {
+  top: -10px;
+  right: -25px;
+  animation-delay: -1s;
+}
+
+.hud-badge-float.bottom-left {
+  bottom: 0px;
+  left: -25px;
+  animation-delay: -2.5s;
+}
+
+.hud-badge-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.hud-badge-icon.trophy {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.hud-badge-icon.book {
+  background: rgba(0, 242, 254, 0.15);
+  color: var(--accent-cyan);
+  border: 1px solid var(--border-accent);
+}
+
+.hud-badge-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.hud-badge-text strong {
+  font-size: 13px;
+  color: #fff;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.hud-badge-text span {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+@keyframes float-badge {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-8px); }
+}
+
+/* ============================================================
+   6. 通用区域标题与卡片规范 (SECTIONS)
+   ============================================================ */
+section {
+  padding: 100px 0;
+  position: relative;
+}
+
+.section-head {
+  margin-bottom: 56px;
+  text-align: left;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.section-tag::before {
+  content: '//';
+  color: var(--accent-violet);
+  font-weight: 900;
+}
+
+.section-title {
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+  margin-bottom: 14px;
+}
+
+.section-desc {
+  font-size: 16px;
+  color: var(--text-dim);
+  max-width: 650px;
+  line-height: 1.7;
+}
+
+/* 玻璃拟态卡片基础 */
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+}
+
+.glass-card:hover {
+  border-color: var(--border-accent);
+  background: var(--bg-card-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 242, 254, 0.1);
+}
+
+/* ============================================================
+   7. 关于我与核心数据 (ABOUT & STATS)
+   ============================================================ */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 48px;
+  align-items: stretch;
+}
+
+.about-intro-card {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.about-bio-p {
+  font-size: 16px;
+  color: var(--text-body);
+  line-height: 1.85;
+  margin-bottom: 20px;
+}
+
+.about-bio-p:last-child {
+  margin-bottom: 0;
+}
+
+.about-bio-p strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.skills-chips-wrap {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.skills-title {
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.skill-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.skill-pill {
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text-dim);
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+.skill-pill:hover {
+  background: rgba(0, 242, 254, 0.12);
+  border-color: var(--border-accent);
+  color: var(--accent-cyan);
+  transform: translateY(-2px);
+}
+
+/* 统计卡片矩阵 */
+.stats-matrix {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.stat-box {
+  padding: 30px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.stat-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(0, 242, 254, 0.08);
+  border: 1px solid var(--border-accent);
+  color: var(--accent-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.stat-icon.purple {
+  background: rgba(139, 92, 246, 0.08);
+  border-color: rgba(139, 92, 246, 0.3);
+  color: #a78bfa;
+}
+
+.stat-number {
+  font-family: 'Plus Jakarta Sans', 'JetBrains Mono', sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1;
+  color: #fff;
+  margin-bottom: 8px;
+  letter-spacing: -1px;
+}
+
+.stat-number.gradient {
+  background: var(--grad-hero);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.stat-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.stat-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   8. 履历时间轴 (CAREER TIMELINE)
+   ============================================================ */
+.timeline-container {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+/* 中轴发光导轨 */
+.timeline-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 28px;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    var(--accent-cyan) 0%,
+    var(--accent-blue) 40%,
+    var(--accent-violet) 80%,
+    transparent 100%
+  );
+  box-shadow: 0 0 12px rgba(0, 242, 254, 0.3);
+}
+
+.timeline-node {
+  position: relative;
+  margin-bottom: 32px;
+  padding-left: 76px;
+}
+
+.timeline-node:last-child {
+  margin-bottom: 0;
+}
+
+/* 节点晶体图标 */
+.timeline-dot-hud {
+  position: absolute;
+  left: 17px;
+  top: 24px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--bg-deep);
+  border: 2px solid var(--accent-cyan);
+  box-shadow: 0 0 15px var(--glow-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.timeline-dot-hud::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+}
+
+.timeline-node:hover .timeline-dot-hud {
+  transform: scale(1.25);
+  box-shadow: 0 0 25px var(--accent-cyan);
+}
+
+.timeline-card {
+  padding: 26px 30px;
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.timeline-role-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.timeline-role {
+  font-size: 19px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.timeline-node.current .timeline-role {
+  color: var(--accent-cyan);
+}
+
+.timeline-tag-pill {
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: rgba(0, 242, 254, 0.12);
+  border: 1px solid var(--border-accent);
+  color: var(--accent-cyan);
+}
+
+.timeline-tag-pill.gov {
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(59, 130, 246, 0.3);
+  color: #60a5fa;
+}
+
+.timeline-tag-pill.edu {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: #34d399;
+}
+
+.timeline-tag-pill.corp {
+  background: rgba(168, 85, 247, 0.12);
+  border-color: rgba(168, 85, 247, 0.3);
+  color: #c084fc;
+}
+
+.timeline-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+}
+
+.timeline-org {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.timeline-link {
+  color: var(--accent-cyan);
+  text-decoration: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.timeline-link:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================
+   9. 专业成就核心 (ACHIEVEMENTS)
+   ============================================================ */
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+}
+
+.achievement-feature-card {
+  padding: 34px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 3D 悬浮书籍效果 */
+.book-showcase-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 0;
+  perspective: 1000px;
+}
+
+.book-3d {
+  width: 170px;
+  height: 240px;
+  position: relative;
+  transform: rotateY(-18deg) rotateX(8deg);
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+}
+
+.book-3d:hover {
+  transform: rotateY(-5deg) rotateX(2deg) scale(1.06);
+}
+
+.book-front {
+  position: absolute;
+  inset: 0;
+  background-image: var(--book-url);
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px 10px 10px 4px;
+  box-shadow: 
+    -8px 8px 30px rgba(0, 0, 0, 0.8),
+    0 0 25px rgba(0, 242, 254, 0.2);
+  z-index: 2;
+  overflow: hidden;
+}
+
+.book-front::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 16px;
+  background: linear-gradient(to right, rgba(0,0,0,0.5), transparent);
+}
+
+.book-spine {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: -12px;
+  width: 16px;
+  background: #1e293b;
+  transform: rotateY(-90deg);
+  transform-origin: right;
+  border-radius: 3px 0 0 3px;
+}
+
+/* 荣誉截图卡片 */
+.award-media-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/10;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background: #020617;
+  cursor: pointer;
+  margin-bottom: 24px;
+}
+
+.award-screenshot-img {
+  width: 100%;
+  height: 100%;
+  background-image: var(--award-url);
+  background-size: cover;
+  background-position: center 20%;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.award-media-wrapper:hover .award-screenshot-img {
+  transform: scale(1.04);
+}
+
+.media-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 8, 17, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(3px);
+}
+
+.award-media-wrapper:hover .media-hover-overlay {
+  opacity: 1;
+}
+
+.zoom-hint {
+  padding: 8px 16px;
+  background: rgba(0, 242, 254, 0.2);
+  border: 1px solid var(--accent-cyan);
+  border-radius: 30px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.card-desc {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.8;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.card-footer-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-subtle);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* 产业大卡片 (跨整行) */
+.industry-wide-card {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 36px;
+  padding: 36px;
+  align-items: center;
+}
+
+.industry-photos-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.industry-thumb {
+  position: relative;
+  aspect-ratio: 4/3;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  background: #020617;
+}
+
+.industry-thumb-bg {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.industry-thumb:hover .industry-thumb-bg {
+  transform: scale(1.08);
+}
+
+.industry-year-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 4px 10px;
+  background: rgba(5, 8, 17, 0.8);
+  border: 1px solid var(--border-accent);
+  color: var(--accent-cyan);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 6px;
+  backdrop-filter: blur(8px);
+}
+
+/* ============================================================
+   10. 培训与教学 (TRAINING SECTION)
+   ============================================================ */
+.training-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.training-tags-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.training-badge {
+  padding: 10px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.training-badge svg {
+  color: var(--accent-cyan);
+}
+
+.training-badge:hover {
+  border-color: var(--border-accent);
+  color: #fff;
+  background: rgba(0, 242, 254, 0.08);
+  transform: translateY(-2px);
+}
+
+.training-cinema-banner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 21/9;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9);
+  cursor: pointer;
+  background: #000;
+}
+
+.training-photo-bg {
+  width: 100%;
+  height: 100%;
+  background-image: var(--training-ncu-url);
+  background-size: cover;
+  background-position: center 35%;
+  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.training-cinema-banner:hover .training-photo-bg {
+  transform: scale(1.03);
+}
+
+.training-caption-hud {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 36px 36px 28px;
+  background: linear-gradient(to top, rgba(5, 8, 17, 0.95) 0%, rgba(5, 8, 17, 0.6) 60%, transparent 100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.caption-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.caption-sub {
+  font-size: 14px;
+  color: var(--text-dim);
+}
+
+.caption-stamp {
+  padding: 8px 18px;
+  background: rgba(0, 242, 254, 0.12);
+  border: 1px solid var(--border-accent);
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--accent-cyan);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   11. 页脚 (FOOTER)
+   ============================================================ */
+footer {
+  padding: 80px 0 50px;
+  border-top: 1px solid var(--border-subtle);
+  background: #03050b;
+  position: relative;
+  z-index: 2;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+}
+
+.footer-brand {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--accent-cyan);
+  letter-spacing: 1px;
+}
+
+.footer-meta {
+  font-size: 14px;
+  color: var(--text-dim);
+  max-width: 500px;
+  line-height: 1.6;
+}
+
+.footer-url-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-body);
+  text-decoration: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  transition: all 0.3s ease;
+}
+
+.footer-url-btn:hover {
+  border-color: var(--border-accent);
+  color: var(--accent-cyan);
+  background: rgba(0, 242, 254, 0.08);
+}
+
+.footer-copyright {
+  margin-top: 24px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   12. 悬浮工具栏 (快速返回顶部 & 打印)
+   ============================================================ */
+.floating-actions {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 99;
+}
+
+.float-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(10, 16, 29, 0.85);
+  border: 1px solid var(--border-accent);
+  color: var(--accent-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  transition: all 0.3s ease;
+}
+
+.float-btn:hover {
+  background: var(--accent-cyan);
+  color: #050811;
+  box-shadow: 0 0 20px var(--glow-cyan);
+  transform: translateY(-3px);
+}
+
+/* ============================================================
+   13. 全屏沉浸式灯箱 (LIGHTBOX MODAL)
+   ============================================================ */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 5, 11, 0.94);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox.active {
+  display: flex;
+  opacity: 1;
+}
+
+.lightbox-dialog {
+  max-width: 92vw;
+  max-height: 88vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lightbox-img-render {
+  max-width: 88vw;
+  max-height: 75vh;
+  border-radius: 16px;
+  border: 1px solid var(--border-accent);
+  box-shadow: 0 0 60px rgba(0, 242, 254, 0.25), 0 25px 50px rgba(0, 0, 0, 0.9);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 1000px;
+  height: 600px;
+}
+
+.lightbox-meta-bar {
+  margin-top: 18px;
+  padding: 8px 20px;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid var(--border-subtle);
+  border-radius: 100px;
+  color: #e2e8f0;
+  font-size: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  text-align: center;
+}
+
+.lightbox-close-btn {
+  position: absolute;
+  top: 24px;
+  right: 32px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-subtle);
+  color: #fff;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lightbox-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+/* ============================================================
+   14. 页面滚动渐显揭示动效 (REVEAL ANIMATIONS)
+   ============================================================ */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.reveal-item.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   15. 响应式布局优化 (RESPONSIVE)
+   ============================================================ */
+@media (max-width: 980px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 50px;
+  }
+
+  .hero-badge-wrap,
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .hero-tagline {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .about-grid,
+  .industry-wide-card {
+    grid-template-columns: 1fr;
+  }
+
+  .achievements-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .training-cinema-banner {
+    aspect-ratio: 16/9;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links, .nav-action-btn {
+    display: none;
+  }
+
+  .nav-links.mobile-open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg-deep);
+    padding: 24px;
+    border-bottom: 1px solid var(--border-accent);
+    gap: 16px;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .hero-info-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .stats-matrix {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline-container::before {
+    left: 18px;
+  }
+
+  .timeline-node {
+    padding-left: 50px;
+  }
+
+  .timeline-dot-hud {
+    left: 7px;
+    top: 22px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .hud-badge-float {
+    display: none;
+  }
+
+  .avatar-tilt-card {
+    width: 240px;
+    height: 240px;
+  }
+
+  .lightbox-img-render {
+    width: 90vw;
+    height: 50vh;
+  }
+}
+
+/* 打印友好样式优化 */
+@media print {
+  nav, .floating-actions, #cyber-canvas, .mouse-glow, .grid-overlay {
+    display: none !important;
+  }
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .glass-card {
+    border: 1px solid #ccc !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    color: #000 !important;
+  }
+  .hero-title, .section-title, .card-title, .timeline-role {
+    color: #000 !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- 动态背景特效 -->
+<canvas id="cyber-canvas"></canvas>
+<div class="mouse-glow" id="mouseGlow"></div>
+<div class="grid-overlay"></div>
+
+<!-- 顶部导航 -->
+<nav id="navbar">
+  <div class="container nav-container">
+    <a href="#" class="nav-brand">
+      <div class="nav-logo-icon">◈</div>
+      <div class="nav-brand-title">
+        <span>杜建军 · 简历</span>
+        <span>AIGC_3D LAB</span>
+      </div>
+    </a>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about" class="nav-anchor">关于我</a></li>
+      <li><a href="#career" class="nav-anchor">履历经历</a></li>
+      <li><a href="#achievements" class="nav-anchor">专业成就</a></li>
+      <li><a href="#training" class="nav-anchor">培训教学</a></li>
+    </ul>
+
+    <a href="http://www.aigc3d.top" target="_blank" rel="noopener noreferrer" class="nav-action-btn">
+      <span>实验室官网</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="切换菜单">☰</button>
+  </div>
+</nav>
+
+<!-- HERO 主屏幕 -->
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-grid">
+      <!-- 左侧个人叙述 -->
+      <div class="hero-text-content">
+        <div class="hero-badge-wrap">
+          <div class="hero-status-badge">
+            <span class="pulse-dot"></span>
+            <span>AIGC_3D视觉实验室 · 创始人</span>
+          </div>
+          <div class="hero-honors-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <span>The Polys 全球五强提名</span>
+          </div>
+        </div>
+
+        <h1 class="hero-title">
+          杜建军<br>
+          <span class="text-gradient">AIGC_3D Vision</span>
+        </h1>
+
+        <p class="hero-tagline">
+          探索<strong>人工智能生成内容 (AIGC)</strong> 与<strong>三维空间视觉</strong>的前沿融合，推动虚拟现实、产学研协同与产业化工程落地。
+        </p>
+
+        <!-- 基础元数据网格 -->
+        <div class="hero-info-grid">
+          <div class="info-item">
+            <span class="info-label">Education</span>
+            <span class="info-val">四川外国语大学 · 英语</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Experience</span>
+            <span class="info-val">政·产·学·研 10+ 年</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Location</span>
+            <span class="info-val">中国 · 江西南昌</span>
+          </div>
+        </div>
+
+        <!-- 行动按钮 -->
+        <div class="hero-buttons">
+          <a href="http://www.aigc3d.top" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <span>访问实验室官网</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </a>
+          <a href="#career" class="btn btn-secondary">
+            <span>查看完整履历</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- 右侧全息 HUD 头像展台 -->
+      <div class="hero-avatar-showcase">
+        <div class="avatar-tilt-card" id="avatarCard">
+          <div class="hud-ring-outer"></div>
+          <div class="hud-ring-inner"></div>
+          <div class="hud-ring-glow"></div>
+          
+          <div class="avatar-photo" title="杜建军 - AIGC_3D视觉实验室创始人"></div>
+
+          <!-- 悬浮浮标 1: 全球奖项 -->
+          <div class="hud-badge-float top-right">
+            <div class="hud-badge-icon trophy">🏆</div>
+            <div class="hud-badge-text">
+              <strong>Top 5 全球提名</strong>
+              <span>The Polys Awards</span>
+            </div>
+          </div>
+
+          <!-- 悬浮浮标 2: 专著出版 -->
+          <div class="hud-badge-float bottom-left">
+            <div class="hud-badge-icon book">📖</div>
+            <div class="hud-badge-text">
+              <strong>专著发行</strong>
+              <span>北航出版社 · 2025</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 / 关于我 -->
+<section id="about">
+  <div class="container">
+    <div class="section-head reveal-item">
+      <div class="section-tag">01 / Profile Overview</div>
+      <h2 class="section-title">关于杜建军</h2>
+      <p class="section-desc">横跨省级虚拟现实产业规划、企业高级经营管理与高校现代产业学院的多维复合型技术开拓者</p>
+    </div>
+
+    <div class="about-grid">
+      <!-- 个人叙述卡片 -->
+      <div class="glass-card about-intro-card reveal-item">
+        <div>
+          <p class="about-bio-p">
+            <strong>AIGC_3D视觉实验室创始人</strong>，长期致力于前沿人工智能生成技术（AIGC）与空间三维视觉计算的深度融合与产业赋能，主导多项技术在新媒体传播、高精度三维资产生成、影视及数字展馆的落地实践。
+          </p>
+          <p class="about-bio-p">
+            曾深度参与江西省虚拟现实顶层战略规划，历任<strong>江西省科技厅省虚拟现实产业链办公室秘书</strong>、<strong>世界VR产业大会南昌市筹备工作领导小组成员</strong>，推动省级重大产业集群与标杆峰会高效组织。
+          </p>
+          <p class="about-bio-p">
+            兼具领军民企高管与知名高校产业副院长历练，在<strong>泰豪创意科技集团</strong>、<strong>江西财经大学虚拟现实现代产业学院</strong>等单位沉淀了扎实的产业孵化、前沿科研产品转化与高素质复合型工程人才培养经验。
+          </p>
+        </div>
+
+        <!-- 核心技能与专业矩阵 -->
+        <div class="skills-chips-wrap">
+          <div class="skills-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Core Competencies · 核心专长</span>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-pill">AIGC 前沿视觉生成</span>
+            <span class="skill-pill">3D 视觉与空间计算</span>
+            <span class="skill-pill">虚拟现实 (VR/XR) 产业规划</span>
+            <span class="skill-pill">现代产业学院学科共建</span>
+            <span class="skill-pill">数字展馆产品化运作</span>
+            <span class="skill-pill">专业学术专著编撰</span>
+            <span class="skill-pill">技术出海与国际交流</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 数据与成果矩阵 -->
+      <div class="stats-matrix">
+        <div class="glass-card stat-box reveal-item">
+          <div class="stat-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div class="stat-number gradient">10+</div>
+          <div class="stat-label">年产业与高管底蕴</div>
+          <div class="stat-desc">政府战略、上市集团、高校多维沉淀</div>
+        </div>
+
+        <div class="glass-card stat-box reveal-item">
+          <div class="stat-icon purple">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+          </div>
+          <div class="stat-number">Top 5</div>
+          <div class="stat-label">全球沉浸媒体大奖提名</div>
+          <div class="stat-desc">The Polys 国际前沿赛道荣誉</div>
+        </div>
+
+        <div class="glass-card stat-box reveal-item">
+          <div class="stat-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <div class="stat-number">1 部</div>
+          <div class="stat-label">国家级出版社专著发行</div>
+          <div class="stat-desc">北京航空航天大学出版社正式出版</div>
+        </div>
+
+        <div class="glass-card stat-box reveal-item">
+          <div class="stat-icon purple">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="stat-number gradient">5+</div>
+          <div class="stat-label">重点高校与标杆企培</div>
+          <div class="stat-desc">南昌大学/江西财大等前沿教学实训</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 / 工作履历 -->
+<section id="career">
+  <div class="container">
+    <div class="section-head reveal-item">
+      <div class="section-tag">02 / Career Trajectory</div>
+      <h2 class="section-title">工作履历与任职历程</h2>
+      <p class="section-desc">构建从产业顶层设计到商业实体落地、从学术理论共建到前沿实验室探索的完整脉络</p>
+    </div>
+
+    <div class="timeline-container">
+      <!-- 现任实验室 -->
+      <div class="timeline-node current reveal-item">
+        <div class="timeline-dot-hud"></div>
+        <div class="glass-card timeline-card">
+          <div class="timeline-header">
+            <div class="timeline-role-wrap">
+              <span class="timeline-role">AIGC_3D视觉实验室 负责人 / 创始人</span>
+              <span class="timeline-tag-pill">创新创业 · 现任</span>
+            </div>
+            <span class="timeline-time">2024 - PRESENT</span>
+          </div>
+          <div class="timeline-org">
+            <span>官方站点：</span>
+            <a href="http://www.aigc3d.top" target="_blank" rel="noopener noreferrer" class="timeline-link">
+              www.aigc3d.top
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 青源宏智 -->
+      <div class="timeline-node reveal-item">
+        <div class="timeline-dot-hud"></div>
+        <div class="glass-card timeline-card">
+          <div class="timeline-header">
+            <div class="timeline-role-wrap">
+              <span class="timeline-role">馆长 · 技术产品部总监</span>
+              <span class="timeline-tag-pill corp">科技场馆 · 运营管理</span>
+            </div>
+            <span class="timeline-time">PRIOR</span>
+          </div>
+          <div class="timeline-org">江西省南昌市青源宏智·AI教育科技馆</div>
+        </div>
+      </div>
+
+      <!-- 江西财经大学 -->
+      <div class="timeline-node reveal-item">
+        <div class="timeline-dot-hud"></div>
+        <div class="glass-card timeline-card">
+          <div class="timeline-header">
+            <div class="timeline-role-wrap">
+              <span class="timeline-role">产业副院长</span>
+              <span class="timeline-tag-pill edu">高等教育 · 产教融合</span>
+            </div>
+            <span class="timeline-time">PRIOR</span>
+          </div>
+          <div class="timeline-org">江西财经大学 虚拟现实（VR）现代产业学院</div>
+        </div>
+      </div>
+
+      <!-- 世界VR产业大会 -->
+      <div class="timeline-node reveal-item">
+        <div class="timeline-dot-hud"></div>
+        <div class="glass-card timeline-card">
+          <div class="timeline-header">
+            <div class="timeline-role-wrap">
+              <span class="timeline-role">筹备工作领导小组成员</span>
+              <span class="timeline-tag-pill gov">国家级盛会 · 产业统筹</span>
+            </div>
+            <span class="timeline-time">2018 - 2021</span>
+          </div>
+          <div class="timeline-org">世界VR产业大会 南昌市筹备工作领导小组</div>
+        </div>
+      </div>
+
+      <!-- 省科技厅 -->
+      <div class="timeline-node reveal-item">
+        <div class="timeline-dot-hud"></div>
+        <div class="glass-card timeline-card">
+          <div class="timeline-header">
+            <div class="timeline-role-wrap">
+              <span class="timeline-role">产业链办公室秘书</span>
+              <span class="timeline-tag-pill gov">政府产业 · 战略推进</span>
+            </div>
+            <span class="timeline-time">PRIOR</span>
+          </div>
+          <div class="timeline-org">江西省科学技术厅 省虚拟现实产业链办公室</div>
+        </div>
+      </div>
+
+      <!-- 泰豪集团 -->
+      <div class="timeline-node reveal-item">
+        <div class="timeline-dot-hud"></div>
+        <div class="glass-card timeline-card">
+          <div class="timeline-header">
+            <div class="timeline-role-wrap">
+              <span class="timeline-role">总裁助理 · 产品事业部副总经理</span>
+              <span class="timeline-tag-pill corp">头部集团 · 战略运营</span>
+            </div>
+            <span class="timeline-time">PRIOR</span>
+          </div>
+          <div class="timeline-org">泰豪创意科技集团</div>
+        </div>
+      </div>
+
+      <!-- 江西水投 -->
+      <div class="timeline-node reveal-item">
+        <div class="timeline-dot-hud"></div>
+        <div class="glass-card timeline-card">
+          <div class="timeline-header">
+            <div class="timeline-role-wrap">
+              <span class="timeline-role">总经理助理</span>
+              <span class="timeline-tag-pill corp">省级国资 · 产业协同</span>
+            </div>
+            <span class="timeline-time">PRIOR</span>
+          </div>
+          <div class="timeline-org">江西水投康赣环保产业集团有限公司</div>
+        </div>
+      </div>
+
+      <!-- 康达国际环保 -->
+      <div class="timeline-node reveal-item">
+        <div class="timeline-dot-hud"></div>
+        <div class="glass-card timeline-card">
+          <div class="timeline-header">
+            <div class="timeline-role-wrap">
+              <span class="timeline-role">董事长秘书</span>
+              <span class="timeline-tag-pill corp">港股上市 · 高管运作</span>
+            </div>
+            <span class="timeline-time">PRIOR</span>
+          </div>
+          <div class="timeline-org">康达国际环保有限公司（06136.HK）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 / 专业成就 -->
+<section id="achievements">
+  <div class="container">
+    <div class="section-head reveal-item">
+      <div class="section-tag">03 / Major Achievements</div>
+      <h2 class="section-title">学术专著与国际行业成就</h2>
+      <p class="section-desc">在国际数字媒体前沿竞技场、权威出版体系及地方产业生态发展中留下坚实印记</p>
+    </div>
+
+    <div class="achievements-grid">
+      <!-- 专著卡片 (带 3D 浮动书本) -->
+      <div class="glass-card achievement-feature-card reveal-item">
+        <div class="book-showcase-container" onclick="openLightbox('book', '《AIGC 新媒体技能与应用实战》封面 · 北京航空航天大学出版社')">
+          <div class="book-3d" title="点击查看专著大图">
+            <div class="book-spine"></div>
+            <div class="book-front"></div>
+          </div>
+        </div>
+        <div class="card-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          <span>Publication · 权威专著 · 2025</span>
+        </div>
+        <h3 class="card-title">《AIGC 新媒体技能与应用实战》</h3>
+        <p class="card-desc">
+          协同<strong>北京航空航天大学</strong>顶尖科研团队联袂编撰，由<strong>北京航空航天大学出版社</strong>权威出版。全书系统解构 AIGC 工业级应用实操体系、生成式三维建模与新媒体全链路创新方案，成为高校专业教学及行业从业者的硬核工具书。
+        </p>
+        <div class="card-footer-meta">
+          <span>出版单位：北京航空航天大学出版社</span>
+          <span>ISBN 认证出版</span>
+        </div>
+      </div>
+
+      <!-- 国际大奖卡片 (带媒体截图与放大预览) -->
+      <div class="glass-card achievement-feature-card reveal-item">
+        <div class="award-media-wrapper" onclick="openLightbox('award', 'The Polys 6th Annual Immersive Awards · 全球五强提名认证')">
+          <div class="award-screenshot-img"></div>
+          <div class="media-hover-overlay">
+            <div class="zoom-hint">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+              <span>查看提名原图</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+          <span>Global Honor · 2026.03</span>
+        </div>
+        <h3 class="card-title">The Polys 全球沉浸式媒体大奖 Top 5</h3>
+        <p class="card-desc">
+          AIGC_3D视觉实验室作品凭借卓越的三维生成技术与跨媒介视听语言，入选美国第六届 <strong>The Polys Immersive Awards</strong> 沉浸式大奖，荣获<strong>「年度 AI · 3D 视频创作者」全球五强提名</strong>，代表中国前沿技术团队亮相全球行业殿堂。
+        </p>
+        <div class="card-footer-meta">
+          <span>赛事：美国 · 第六届 The Polys Awards</span>
+          <span>Nominee · Top 5</span>
+        </div>
+      </div>
+
+      <!-- 产业推动者跨栏大卡片 -->
+      <div class="glass-card industry-wide-card reveal-item">
+        <div class="industry-photos-gallery">
+          <div class="industry-thumb" onclick="openLightbox('vr2018', '2018 世界VR产业大会 · 影视内容分论坛现场')">
+            <div class="industry-thumb-bg" style="background-image: var(--vr-2018-url);"></div>
+            <div class="industry-year-badge">2018 大会峰会</div>
+          </div>
+          <div class="industry-thumb" onclick="openLightbox('vr2021b', '世界VR产业大会 · 产业筹备与重大论坛现场')">
+            <div class="industry-thumb-bg" style="background-image: var(--vr-2021b-url);"></div>
+            <div class="industry-year-badge">产业生态论坛</div>
+          </div>
+        </div>
+
+        <div class="industry-content-info">
+          <div class="card-tag">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            <span>Provincial Industry Leadership</span>
+          </div>
+          <h3 class="card-title">江西省虚拟现实 (VR) 产业链核心推动者</h3>
+          <p class="card-desc">
+            从 2018 首届世界 VR 产业大会起步，深度参与江西省虚拟现实产业链战略蓝图绘制、政策咨询、政企对接与多届世界 VR 产业大会筹备工作。积极撮合头部产学研资源，为江西打造“世界 VR 之都”奠定了扎实的落地支撑。
+          </p>
+          <div class="card-footer-meta" style="margin-top: 20px;">
+            <span>服务组织：江西省科技厅 · 南昌市筹备领导小组</span>
+            <span>2018 - 至今</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 / 培训教学 -->
+<section id="training">
+  <div class="container">
+    <div class="section-head reveal-item">
+      <div class="section-tag">04 / Education & Training</div>
+      <h2 class="section-title">前沿培训与产教融合</h2>
+      <p class="section-desc">将实验室科研实践沉淀为体系化技术课程，深入双一流高校与电子信息先锋企业</p>
+    </div>
+
+    <div class="training-showcase">
+      <!-- 赋能院校徽章墙 -->
+      <div class="training-tags-bar reveal-item">
+        <div class="training-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          <span>南昌大学（211 / 双一流）</span>
+        </div>
+        <div class="training-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          <span>江西财经大学</span>
+        </div>
+        <div class="training-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          <span>南昌科技职业大学 · 泰豪动漫学院</span>
+        </div>
+        <div class="training-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          <span>南昌市电子信息高精尖企业</span>
+        </div>
+        <div class="training-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span>AIGC赋能设计与影视专项研修</span>
+        </div>
+      </div>
+
+      <!-- 电影感沉浸式合影展卡 -->
+      <div class="training-cinema-banner reveal-item" onclick="openLightbox('ncu', '南昌大学建筑与设计学院 · AIGC赋能建筑与艺术设计研修班全体合影')">
+        <div class="training-photo-bg"></div>
+        <div class="training-caption-hud">
+          <div>
+            <h3 class="caption-title">AIGC 赋能建筑与艺术设计高级研修班</h3>
+            <p class="caption-sub">南昌大学建筑与设计学院 · 产教深度融合授课合影</p>
+          </div>
+          <div class="caption-stamp">NCU · 专项实训现场</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 底部版权与官网通道 -->
+<footer>
+  <div class="container footer-content">
+    <div class="footer-brand">◈ AIGC_3D 视觉实验室</div>
+    <p class="footer-meta">
+      探索人工智能与空间视觉的无限边界 · 推动技术转化与数字创意未来
+    </p>
+    <a href="http://www.aigc3d.top" target="_blank" rel="noopener noreferrer" class="footer-url-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      <span>访问主站：www.aigc3d.top</span>
+    </a>
+    <div class="footer-copyright">
+      &copy; 2026 杜建军 (Du Jianjun) · AIGC_3D视觉实验室版权所有
+    </div>
+  </div>
+</footer>
+
+<!-- 悬浮操作面板 -->
+<div class="floating-actions">
+  <button class="float-btn" id="scrollTopBtn" title="返回顶部" aria-label="返回顶部">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+  <button class="float-btn" onclick="window.print()" title="打印/导出简历" aria-label="打印简历">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+  </button>
+</div>
+
+<!-- 全屏图片灯箱 (Lightbox) -->
+<div class="lightbox" id="lightboxModal">
+  <button class="lightbox-close-btn" id="lightboxClose" aria-label="关闭预览">&times;</button>
+  <div class="lightbox-dialog" onclick="event.stopPropagation()">
+    <div class="lightbox-img-render" id="lightboxImg"></div>
+    <div class="lightbox-meta-bar" id="lightboxTitle"></div>
+  </div>
+</div>
+
+<!-- ============================================================
+     JAVASCRIPT: 背景科技星云粒子、视差光晕与动态交互
+     ============================================================ -->
+<script>
+// 1. 背景动态交互粒子系统 (Canvas Matrix / Constellation)
+(function initCyberCanvas() {
+  const canvas = document.getElementById('cyber-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let width, height;
+  let particles = [];
+
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const PARTICLE_COUNT = Math.min(50, Math.floor(window.innerWidth / 25));
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    particles.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.45,
+      vy: (Math.random() - 0.5) * 0.45,
+      radius: Math.random() * 1.5 + 0.8,
+      alpha: Math.random() * 0.5 + 0.2
+    });
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, width, height);
+
+    // 绘制粒子
+    for (let i = 0; i < particles.length; i++) {
+      let p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if (p.x < 0) p.x = width;
+      if (p.x > width) p.x = 0;
+      if (p.y < 0) p.y = height;
+      if (p.y > height) p.y = 0;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(0, 242, 254, ${p.alpha})`;
+      ctx.fill();
+
+      // 连接相近粒子
+      for (let j = i + 1; j < particles.length; j++) {
+        let p2 = particles[j];
+        let dx = p.x - p2.x;
+        let dy = p.y - p2.y;
+        let dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < 120) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.strokeStyle = `rgba(0, 242, 254, ${0.15 * (1 - dist / 120)})`;
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(render);
+  }
+  render();
+})();
+
+// 2. 鼠标跟随聚光灯 (Mouse Spotlight)
+const mouseGlow = document.getElementById('mouseGlow');
+window.addEventListener('mousemove', (e) => {
+  if (mouseGlow) {
+    mouseGlow.style.left = e.clientX + 'px';
+    mouseGlow.style.top = e.clientY + 'px';
+  }
+});
+
+// 3. 滚动吸顶导航条状态与返回顶部按钮
+const navbar = document.getElementById('navbar');
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+window.addEventListener('scroll', () => {
+  const currentScroll = window.pageYOffset;
+  if (currentScroll > 40) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+
+  if (currentScroll > 400) {
+    scrollTopBtn.style.opacity = '1';
+    scrollTopBtn.style.pointerEvents = 'all';
+  } else {
+    scrollTopBtn.style.opacity = '0';
+    scrollTopBtn.style.pointerEvents = 'none';
+  }
+});
+
+scrollTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// 移动端菜单切换
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+menuToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('mobile-open');
+});
+document.querySelectorAll('.nav-anchor').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('mobile-open');
+  });
+});
+
+// 4. 头像卡片 3D 悬浮视差响应 (Avatar 3D Tilt)
+const avatarCard = document.getElementById('avatarCard');
+if (avatarCard && window.innerWidth > 900) {
+  avatarCard.addEventListener('mousemove', (e) => {
+    const rect = avatarCard.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    const rotateX = (-y / rect.height) * 22;
+    const rotateY = (x / rect.width) * 22;
+    avatarCard.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  });
+
+  avatarCard.addEventListener('mouseleave', () => {
+    avatarCard.style.transform = 'rotateX(0deg) rotateY(0deg)';
+  });
+}
+
+// 5. 滚动视差揭示动效 (IntersectionObserver)
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('revealed');
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal-item').forEach(el => revealObserver.observe(el));
+
+// 6. 全屏灯箱 (Image Lightbox System)
+const mediaSources = {
+  'book': {
+    url: 'var(--book-url)',
+    defaultCaption: '《AIGC 新媒体技能与应用实战》专著出版 · 北航出版社'
+  },
+  'award': {
+    url: 'var(--award-url)',
+    defaultCaption: 'The Polys 6th Annual Immersive Awards 全球五强提名认证'
+  },
+  'vr2018': {
+    url: 'var(--vr-2018-url)',
+    defaultCaption: '2018 世界VR产业大会现场 · 影视内容分论坛'
+  },
+  'vr2021b': {
+    url: 'var(--vr-2021b-url)',
+    defaultCaption: '世界VR产业大会 · 产业筹备与重大论坛现场'
+  },
+  'ncu': {
+    url: 'var(--training-ncu-url)',
+    defaultCaption: '南昌大学建筑与设计学院 · AIGC 赋能研修班合影'
+  }
+};
+
+const lightboxModal = document.getElementById('lightboxModal');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxTitle = document.getElementById('lightboxTitle');
+const lightboxClose = document.getElementById('lightboxClose');
+
+function openLightbox(key, customCaption) {
+  const item = mediaSources[key];
+  if (!item) return;
+
+  lightboxImg.style.backgroundImage = item.url;
+  lightboxTitle.textContent = customCaption || item.defaultCaption;
+  lightboxModal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightboxModal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+lightboxClose.addEventListener('click', closeLightbox);
+lightboxModal.addEventListener('click', closeLightbox);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeLightbox();
+});
+</script>
+
+</body>
+</html>
