@@ -53,6 +53,10 @@
   --vr-2020-url: url('https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/RhbobK597orezgx8WZEccvo7nze');
   --vr-2021-url: url('https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/KDVnbqI32o9hXGxyS55cjoMvnXg');
   --vr-2021b-url: url('https://media.doubao.com/space/api/box/stream/download/all_by_mount_point/B5OrbrOpwoJdh8x1a3RcqDA4nic');
+  --appoint-jxufe-url: url('assets/img/appoint-jxufe.jpg');
+  --celebration-kangda-url: url('assets/img/celebration-kangda.jpg');
+  --event-ai-museum-url: url('assets/img/event-ai-museum.jpg');
+  --honor-vr-committee-url: url('assets/img/honor-vr-committee.jpg');
 }
 
 /* ============================================================
@@ -1022,6 +1026,73 @@ section {
   text-decoration: underline;
 }
 
+/* 履历凭据图与实况卡 */
+.timeline-proof-row {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.timeline-proof-info {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.65;
+}
+
+.timeline-proof-thumb {
+  position: relative;
+  width: 136px;
+  height: 88px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border-accent);
+  cursor: pointer;
+  flex-shrink: 0;
+  background: #020617;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timeline-proof-thumb:hover {
+  transform: translateY(-2px) scale(1.04);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 20px var(--glow-cyan);
+}
+
+.timeline-proof-thumb-bg {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center top;
+  transition: transform 0.4s ease;
+}
+
+.timeline-proof-thumb:hover .timeline-proof-thumb-bg {
+  transform: scale(1.08);
+}
+
+.timeline-proof-badge {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  padding: 3px 8px;
+  background: rgba(5, 8, 17, 0.88);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--accent-cyan);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  backdrop-filter: blur(6px);
+}
+
 /* ============================================================
    9. 专业成就核心 (ACHIEVEMENTS)
    ============================================================ */
@@ -1630,6 +1701,17 @@ footer {
     width: 90vw;
     height: 50vh;
   }
+
+  .timeline-proof-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .timeline-proof-thumb {
+    width: 100%;
+    height: 140px;
+  }
 }
 
 /* 打印友好样式优化 */
@@ -1901,6 +1983,18 @@ footer {
             <span class="timeline-time">PRIOR</span>
           </div>
           <div class="timeline-org">江西省南昌市青源宏智·AI教育科技馆</div>
+          <div class="timeline-proof-row">
+            <div class="timeline-proof-info">
+              主导AI教育科技馆整体技术产品规划与场馆运营，联合强脑科技 (BrainCo)、鲸鱼AI、裸眼3D等前沿生态落地应用。
+            </div>
+            <div class="timeline-proof-thumb" onclick="openLightbox('event_ai_museum', '青源宏智·AI教育科技馆开馆仪式现场合影')" title="点击查看开馆仪式原图">
+              <div class="timeline-proof-thumb-bg" style="background-image: var(--event-ai-museum-url); background-position: center;"></div>
+              <div class="timeline-proof-badge">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <span>开馆合影</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1913,9 +2007,21 @@ footer {
               <span class="timeline-role">产业副院长</span>
               <span class="timeline-tag-pill edu">高等教育 · 产教融合</span>
             </div>
-            <span class="timeline-time">PRIOR</span>
+            <span class="timeline-time">2023.06 - 2026.03</span>
           </div>
           <div class="timeline-org">江西财经大学 虚拟现实（VR）现代产业学院</div>
+          <div class="timeline-proof-row">
+            <div class="timeline-proof-info">
+              由学校2023年第7次校长办公会议研究决定正式聘任（江财人事字〔2023〕17号），负责统筹推进虚拟现实国家现代产业学院学科共建与产教深度融合。
+            </div>
+            <div class="timeline-proof-thumb" onclick="openLightbox('appoint_jxufe', '江西财经大学文件（江财人事字〔2023〕17号）· 关于聘任杜建军为虚拟现实现代产业学院产业副院长的通知')" title="点击查看聘任红头文件原件">
+              <div class="timeline-proof-thumb-bg" style="background-image: var(--appoint-jxufe-url); background-position: top center;"></div>
+              <div class="timeline-proof-badge">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <span>聘任公文</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1928,9 +2034,21 @@ footer {
               <span class="timeline-role">筹备工作领导小组成员</span>
               <span class="timeline-tag-pill gov">国家级盛会 · 产业统筹</span>
             </div>
-            <span class="timeline-time">2018 - 2021</span>
+            <span class="timeline-time">2018 - 2022</span>
           </div>
           <div class="timeline-org">世界VR产业大会 南昌市筹备工作领导小组</div>
+          <div class="timeline-proof-row">
+            <div class="timeline-proof-info">
+              脱岗全职参与世界VR产业大会筹备工作，积极对接主宾国、国际论坛与产业资源，获大会筹备工作领导小组办公室专函致谢表彰。
+            </div>
+            <div class="timeline-proof-thumb" onclick="openLightbox('honor_vr', '世界VR产业大会南昌市筹备工作领导小组办公室致杜建军同志全职筹备感谢信')" title="点击查看感谢信红头文件原件">
+              <div class="timeline-proof-thumb-bg" style="background-image: var(--honor-vr-committee-url); background-position: top center;"></div>
+              <div class="timeline-proof-badge">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <span>官方感谢信</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1991,6 +2109,18 @@ footer {
             <span class="timeline-time">PRIOR</span>
           </div>
           <div class="timeline-org">康达国际环保有限公司（06136.HK）</div>
+          <div class="timeline-proof-row">
+            <div class="timeline-proof-info">
+              协助董事长及董事会推进香港联交所主板IPO上市全流程，统筹管理上市志庆、投资者关系管理与跨境资本市场协同运作。
+            </div>
+            <div class="timeline-proof-thumb" onclick="openLightbox('celebration_kangda', '康达国际环保有限公司（06136.HK）香港主板上市志庆晚宴合影')" title="点击查看上市庆典原图">
+              <div class="timeline-proof-thumb-bg" style="background-image: var(--celebration-kangda-url); background-position: center;"></div>
+              <div class="timeline-proof-badge">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <span>上市庆典</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -2338,6 +2468,22 @@ const mediaSources = {
   'ncu': {
     url: 'var(--training-ncu-url)',
     defaultCaption: '南昌大学建筑与设计学院 · AIGC 赋能研修班合影'
+  },
+  'appoint_jxufe': {
+    url: 'var(--appoint-jxufe-url)',
+    defaultCaption: '江西财经大学文件（江财人事字〔2023〕17号）· 关于聘任杜建军为虚拟现实现代产业学院产业副院长的通知'
+  },
+  'honor_vr': {
+    url: 'var(--honor-vr-committee-url)',
+    defaultCaption: '世界VR产业大会南昌市筹备工作领导小组办公室致杜建军同志全职筹备感谢信'
+  },
+  'event_ai_museum': {
+    url: 'var(--event-ai-museum-url)',
+    defaultCaption: '青源宏智·AI教育科技馆 · 开馆仪式现场合影'
+  },
+  'celebration_kangda': {
+    url: 'var(--celebration-kangda-url)',
+    defaultCaption: '康达国际环保有限公司（06136.HK）· 港股上市志庆晚宴合影'
   }
 };
 
